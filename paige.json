@@ -1,0 +1,9 @@
+{
+	"title": "Rubberduck",
+	"content_file": "readme.md",
+	"include_index": true,
+	"header": "Rubberduck",
+	"subheader": "Evented AOP for NodeJS",
+	"background": "whitey",
+	"docco_files": "examples/*.js"
+}

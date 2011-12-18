@@ -3,19 +3,21 @@ events = require('events');
 
 exports.wrapAnonymus = function (test) {
 	test.expect(4);
+	// Create an event emitter to attach to the wrapped function
 	emitter = new events.EventEmitter();
 	
+	// The function to wrap
 	var fn = function(arg) {
 		test.ok(true, 'Fn called');
 		return 'testing';
 	}
 	
-	var wrapped = duck.wrap(emitter, fn);
-	
+	var wrapped = duck.wrap.fn(emitter, fn);
+	// Emitted before
 	emitter.on('before', function(args) {
 		test.equal(args[0], 'test');
 	});
-	
+	// Emitted after
 	emitter.on('after', function(result) {
 		test.equal(result, 'testing');
 	});
@@ -23,13 +25,6 @@ exports.wrapAnonymus = function (test) {
 	test.equal(wrapped('test'), 'testing');
 	test.done();
 };
-
-/*
-exports.wrapScope = function (test) {
-	test.fail('Test proper scoping');
-	test.done();
-};
-*/
 
 exports.wrapNamed = function (test) {
 	test.expect(8);
@@ -40,9 +35,9 @@ exports.wrapNamed = function (test) {
 		return 'testing';
 	}
 	
-	var wrapped = duck.wrap(emitter, fn, 'quack');
+	var wrapped = duck.wrap.fn(emitter, fn, 'quack');
 	
-	emitter.on('before', function(args, method) {
+	emitter.on('before', function(args, context, method) {
 		test.equal(args[0], 'test');
 		test.equal(method, 'quack');
 	});
@@ -51,7 +46,7 @@ exports.wrapNamed = function (test) {
 		test.equal(args[0], 'test');
 	});
 
-	emitter.on('after', function(result, args, method) {
+	emitter.on('after', function(result, args, context, method) {
 		test.equal(result, 'testing');
 		test.equal(method, 'quack');
 	});
@@ -73,7 +68,7 @@ exports.wrapAsync = function (test) {
 		cb('testing');
 	}
 	
-	var wrapped = duck.wrapAsync(emitter, asyncFn);
+	var wrapped = duck.wrap.async(emitter, asyncFn);
 
 	var callback = function(result) {
 		test.equal(result, 'testing');
@@ -93,8 +88,9 @@ exports.wrapAsync = function (test) {
 	test.done();
 };
 
-exports.duck = function(test)
-{
+exports.wrapScope = function (test) {
+	test.expect(2);
+	
 	var obj = {
 		number : 42,
 		method : function()
@@ -103,15 +99,15 @@ exports.duck = function(test)
 		}
 	};
 	
-	test.equal(obj.method(), 42);
+	emitter = new events.EventEmitter();
 	
-	var emitter = new duck.Duck(obj);
+	var wrapped = duck.wrap.fn(emitter, obj.method, 'method', obj);
 	
-	emitter.on('before', function() {
-		console.log('Before');
+	emitter.on('after', function(result) {
+		test.equal(result, 42);
 	});
 	
-	test.equal(obj.method(), 42);
-
+	test.equal(wrapped(), 42);
+	
 	test.done();
 };
