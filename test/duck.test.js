@@ -1,3 +1,4 @@
+var duck = require('../lib/rubberduck');
 
 exports.duckPunchSimple = function(test)
 {

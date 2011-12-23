@@ -5,7 +5,7 @@ before or after a method executes.
 
 ## Simple punching
 
-First we need to load the library and create a simple object to be punched.
+First, load the library and create a simple object to be punched.
 
 	var rubber = require('rubberduck'),
 		object = {
@@ -39,7 +39,7 @@ the arguments, its context and the name of the method:
 		console.log(result);
 	});
 	
-You can also listen to events of specific punched methods. The name convention follows
+You can also listen to events of specific punched methods. The naming convention follows
 the camelCased names for Events as recommended in the NodeJS documentation. E.g. for the
 method _answer_ the *beforeAnswer* and *afterAnswer* events will fire:
 	
@@ -54,8 +54,13 @@ Now you can just call the punched method and should see a bunch of output on the
 ## Asynchronous punching
 
 We can also punch asynchronous methods, that execute a callback instead of returning the value.
-For this to happen, you have to tell Rubberduck the position of the callback in your arguments list.
+For this to happen, you have to tell Rubberduck the position of the callback in your arguments list
+when punching a method.
+
+## Punching prototypes
+
+
 
 ## But this is not really AOP
 
-Not really. But rubber ducks aren't really ducks either.
+Not really. But rubber ducks aren't real ducks either.
