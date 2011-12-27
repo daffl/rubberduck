@@ -48,7 +48,7 @@ Once you picked the methods to be punched the emitter fires the following events
 	});
 
 You can also listen to specific events by using camelcased event names.
-To get an event only before the _test_ method, attach the following event listener:
+To get evnts only for the _test_ method, attach the following event listener:
 
 	emitter.on('beforeTest', function(args, instance, name) {
 	});
@@ -65,7 +65,7 @@ In this case the _after_ events receives an array of the callback parameters ins
 Just tell the event emitter the position of the callback in your arguments list when punching a method
 (use -1 if the callback is at the end of the argument list):
 
-	var rubberduck = require('../lib/rubberduck'),
+	var rubberduck = require('rubberduck'),
 	Duck = function(name) {
 		this.name = name;
 	}
