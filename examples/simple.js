@@ -1,17 +1,16 @@
-// Load the library
-var rubber = require('../lib/rubberduck');
-
-var object = {
+var rubberduck = require('../lib/rubberduck'),
+// Lets create a simple object
+object = {
 	number : 42,
 	answer : function()
 	{
 		return this.number;
 	}
 },
+// Create the event emitter and punch the method _answer_
+emitter = rubberduck.emitter(object).punch('answer');
 
-emitter = rubber.duck(object).punch('answer');
-
-// Create a new emitter
+// Attach a general listener that fires before every method
 emitter.on('before', function(args, context, name) {
 	console.log('Running before method ' + name);
 	console.log(args);

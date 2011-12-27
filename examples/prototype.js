@@ -1,24 +1,27 @@
 // Load the library
-var rubber = require('../lib/rubberduck'),
-
-Thing = function(name) {
+var rubberduck = require('../lib/rubberduck'),
+// The Duck class
+Duck = function(name) {
 	this.name = name;
 }
-
-Thing.prototype.getName = function() {
-	return this.name;
+// Add a _getName_ method to the prototype
+Duck.prototype.getName = function() {
+	return this.name + ' Duck';
 }
 
-emitter = rubber.duck(Thing.prototype).punch('getName');
+// Create an emitter on the prototype
+emitter = rubberduck.emitter(Duck.prototype)
+	// Punch calls to the getName method
+	.punch('getName');
 
-// Create a new emitter
+// Attach a general event listener before a method executes
 emitter.on('before', function(args, context, name) {
 	console.log('Running before method ' + name);
 	console.log(context);
 });
 
-var inst = new Thing('Duck');
-console.log(inst.getName());
+var donald = new Duck('Donald'),
+darkwin = new Duck('Darkwin');
 
-var other = new Thing('Goose');
-console.log(other.getName());
+console.log(donald.getName());
+console.log(darkwin.getName());

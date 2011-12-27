@@ -11,7 +11,7 @@ exports.duckPunchSimple = function(test)
 		}
 	};
 	
-	var emitter = duck.duck(obj).punch('method');
+	var emitter = duck.emitter(obj).punch('method');
 	
 	emitter.on('before', function() {
 		test.ok(true, "before ran");

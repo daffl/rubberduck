@@ -1,66 +1,88 @@
 # Rubberduck - Evented AOP for NodeJS
 
 Rubberduck punches JavaScript objects and adds the ability to receive events
-before or after a method executes.
+before and after a method executes.
 
 ## Simple punching
 
-First, load the library and create a simple object to be punched.
+Lets punch the _push_ method of an array instance and log the element that gets
+pushed before the method executes and the new length of the array 
+(returned by Array.push) and the pushed element when _push_ returns.
 
-	var rubber = require('rubberduck'),
-		object = {
-			number : 42,
-			answer : function()
-			{
-				return this.number;
-			}
-		};
-
-Create an event emitter with rubberduck for that object and tell it to listen for
-events on the _answer_ method.
-
-	var emitter = rubber.duck(object).punch('answer');
+	var rubberduck = require('rubberduck'),
+		myarray = [],
+		emitter = rubberduck.emitter(myarray).punch('push');
 	
-Lets add some event handlers. The *before* handler will fire before every
-punched method with the method arguments, the context (this reference of
-the method) and the name of the method as parameters:
-
-	emitter.on('before', function(args, context, name) {
-		console.log('Running before method ' + name);
-		console.log(args);
-		console.log(context);
+	emitter.on('beforePush', function(args, instance) {
+		console.log('About to push ' + args[0]);
 	});
 	
-*after* will fire after every punched method with the result returned by the method,
-the arguments, its context and the name of the method:
-	
-	emitter.on('after', function(result, args, context, name) {
-		console.log('Got general after method event');
-		console.log(result);
+	emitter.on('afterPush', function(result, args, instance) {
+		console.log('Pushed ' + args[0] + ', the new length is ' + result);
 	});
 	
-You can also listen to events of specific punched methods. The naming convention follows
-the camelCased names for Events as recommended in the NodeJS documentation. E.g. for the
-method _answer_ the *beforeAnswer* and *afterAnswer* events will fire:
-	
-	emitter.on('afterAnswer', function(result, args, context, name) {
-		console.log('Got afterAnswer event and the answer is ' + result);
+	myarray.push('Test');
+
+## Listening to events
+
+Once you picked the methods to be punched the emitter fires the following events:
+
+	// Before any punched method executes
+	emitter.on('before', function(args, instance, name) {
+		// args : Array of function arguments
+		// instance: The function context (this reference)
+		// name : The function name
 	});
 	
-Now you can just call the punched method and should see a bunch of output on the console.
+	// After any punched method returned
+	emitter.on('after', function(result, args, instance, name) {
+		// result : The return value or an array of
+		//	the callback arguments for asynchronous functions
+		// args : Array of function arguments
+		// instance: The function context (this reference)
+		// name : The function name
+	});
+
+You can also listen to specific methods being executed by using camelcased event names.
+So to get an event only before the _test_ method attach the following event listener:
+
+	emitter.on('beforeTest', function(args, instance, name) {
+	});
 	
-	object.answer();
+	emitter.on('afterTest', function(result, args, instance, name) {
+	});
+	
+The parameters are the same as in the general event listeners.
 
 ## Asynchronous punching
 
-We can also punch asynchronous methods, that execute a callback instead of returning the value.
-For this to happen, you have to tell Rubberduck the position of the callback in your arguments list
-when punching a method.
+You can also punch asynchronous methods, that execute a callback instead of returning the value.
+In this case the _after_ events receives an array of the callbacks arguments instead of a single return value.
+Just tell the event emitter the position of the callback in your arguments list when punching a method
+(use -1 if the callback is at the end of the argument list):
 
-## Punching prototypes
+	var rubberduck = require('../lib/rubberduck'),
+	Duck = function(name) {
+		this.name = name;
+	}
+	
+	Duck.prototype.quack = function(callback)
+	{
+		callback(null, this.name + ' quacks!');
+	}
+	
+	var donald = new Duck('Donald'),
+		emitter = rubberduck.emitter(donald).punch('quack', 0);
 
+	// Log the callback results for _quack_
+	emitter.on('afterQuack', function(results) {
+		// Results contains the callback arguments
+		console.log(results);
+	});
 
+## Punching prototypes and selective punching
 
-## But this is not really AOP
-
-Not really. But rubber ducks aren't real ducks either.
+You can also punch an objects prototype to receive events about all its instances but it
+is important to be selective about what methods to punch. Firing events on methods that get
+called many times (e.g. when punching Array.prototype) might lead to big performance
+hits and can even exceed the maximum call stack size.
