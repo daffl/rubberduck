@@ -1,7 +1,7 @@
 {
   "name": "rubberduck",
-  "description": "Punch JavaScript objects and receive events before and after a function executes ",
-  "version": "0.0.8",
+  "description": "Punch JavaScript objects and receive events before and after a function executes",
+  "version": "0.0.9",
   "homepage": "https://github.com/daffl/rubberduck",
   "repository": {
     "type": "git",

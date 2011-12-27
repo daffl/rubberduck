@@ -1,13 +1,12 @@
 # Rubberduck - Evented AOP for NodeJS
 
-Rubberduck punches JavaScript objects and adds the ability to receive events
-before and after a method executes.
+Rubberduck punches JavaScript objects and lets you receive events before and after a method executes.
 
 ## Simple punching
 
 Lets punch the _push_ method of an array instance and log the element that gets
-pushed before the method executes and the new length of the array 
-(returned by Array.push) and the pushed element when _push_ returns.
+pushed before the method executes and the new length of the array (returned by Array.push)
+and the pushed element when it returns.
 
 	var rubberduck = require('rubberduck'),
 		myarray = [],
@@ -43,8 +42,8 @@ Once you picked the methods to be punched the emitter fires the following events
 		// name : The function name
 	});
 
-You can also listen to specific methods being executed by using camelcased event names.
-So to get an event only before the _test_ method attach the following event listener:
+You can also listen to specific events by using camelcased event names.
+To get an event only before the _test_ method, attach the following event listener:
 
 	emitter.on('beforeTest', function(args, instance, name) {
 	});
@@ -57,7 +56,7 @@ The parameters are the same as in the general event listeners.
 ## Asynchronous punching
 
 You can also punch asynchronous methods, that execute a callback instead of returning the value.
-In this case the _after_ events receives an array of the callbacks arguments instead of a single return value.
+In this case the _after_ events receives an array of the callback parameters instead of a single return value.
 Just tell the event emitter the position of the callback in your arguments list when punching a method
 (use -1 if the callback is at the end of the argument list):
 
@@ -84,5 +83,5 @@ Just tell the event emitter the position of the callback in your arguments list 
 
 You can also punch an objects prototype to receive events about all its instances but it
 is important to be selective about what methods to punch. Firing events on methods that get
-called many times (e.g. when punching Array.prototype) might lead to big performance
-hits and can even exceed the maximum call stack size.
+called many times (e.g. attaching to the Array.prototype) might lead to big performance
+hits and can quickly exceed the maximum call stack size.
