@@ -3,7 +3,7 @@ Install it using [NPM](http://npmjs.org)
 
 > npm install rubberduck
 
-or clone the [GitHub repository](git@github.com:daffl/rubberduck.git).
+or clone the [GitHub repository](https://github.com/daffl/rubberduck).
 
 	var rubberduck = require('rubberduck');
 
