@@ -1,6 +1,11 @@
-# Rubberduck - Evented AOP for NodeJS
-
 Rubberduck punches JavaScript objects and lets you receive events before and after a method executes.
+Install it using [NPM](http://npmjs.org)
+
+> npm install rubberduck
+
+or clone the [GitHub repository](git@github.com:daffl/rubberduck.git).
+
+	var rubberduck = require('rubberduck');
 
 ## Simple punching
 
