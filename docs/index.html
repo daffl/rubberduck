@@ -1,0 +1,94 @@
+<!DOCTYPE html> <html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">      <title>Rubberduck</title>   <style>     body {       font-size: 16px;       line-height: 24px;       background: #fff url("bg.png");       color: #252519;       font-family: "Palatino Linotype", "Book Antiqua", Palatino, FreeSerif, serif;       padding: 0 0 50px 50px;     }     div.container {       width: 720px;       margin: 50px 0 50px 50px;     }     p {       width: 550px;     }       #documentation p {         margin-bottom: 4px;       }     a, a:visited {       padding: 0 2px;       text-decoration: none;       background: #dbe6f3;       color: #3f6fa5;     }     a:active, a:hover {       color: #dbe6f3;       background: #3f6fa5;     }     h1, h2, h3, h4, h5, h6 {       margin-top: 40px;       width: 550px;       line-height: 1.25em;     }     b.header {       font-size: 18px;     }     span.alias {       font-size: 14px;       font-style: italic;       margin-left: 20px;     }     table, tr, td {       margin: 0; padding: 0;     }       td {         padding: 2px 12px 2px 0;       }     ul {       list-style-type: circle;       padding: 0 0 0 20px;     }       li {         width: 500px;         margin-bottom: 10px;       }     code, pre, tt {       font-family: Monaco, Consolas, "Lucida Console", monospace;       font-size: 12px;       line-height: 18px;       color: #555529;     }       pre {         font-size: 12px;         padding: 2px 0 2px 12px;         border-left: 6px solid #aaaa99;         margin: 0px 0 30px;       }   </style> </head> <body>   <h1>Rubberduck</h1>        <em>Evented AOP for NodeJS</em>         <h3>Source files:</h3>   <ol>            <li><a href="array.html">array.js</a></li>            <li><a href="async.html">async.js</a></li>            <li><a href="prototype.html">prototype.js</a></li>            <li><a href="simple.html">simple.js</a></li>        </ol>      <p>Rubberduck punches JavaScript objects and lets you receive events before and after a method executes.
+Install it using <a href="http://npmjs.org">NPM</a></p>
+
+<blockquote>
+  <p>npm install rubberduck</p>
+</blockquote>
+
+<p>or clone the <a href="git@github.com:daffl/rubberduck.git">GitHub repository</a>.</p>
+
+<pre><code>var rubberduck = require('rubberduck');</code></pre>
+
+<h2>Simple punching</h2>
+
+<p>Lets punch the <em>push</em> method of an array instance and log the element that gets
+pushed before the method executes and the new length of the array (returned by Array.push)
+and the pushed element when it returns.</p>
+
+<pre><code>var rubberduck = require('rubberduck'),
+    myarray = [],
+    emitter = rubberduck.emitter(myarray).punch('push');
+
+emitter.on('beforePush', function(args, instance) {
+    console.log('About to push ' + args[0]);
+});
+
+emitter.on('afterPush', function(result, args, instance) {
+    console.log('Pushed ' + args[0] + ', the new length is ' + result);
+});
+
+myarray.push('Test');</code></pre>
+
+<h2>Listening to events</h2>
+
+<p>Once you picked the methods to be punched the emitter fires the following events:</p>
+
+<pre><code>// Before any punched method executes
+emitter.on('before', function(args, instance, name) {
+    // args : Array of function arguments
+    // instance: The function context (this reference)
+    // name : The function name
+});
+
+// After any punched method returned
+emitter.on('after', function(result, args, instance, name) {
+    // result : The return value or an array of
+    //  the callback arguments for asynchronous functions
+    // args : Array of function arguments
+    // instance: The function context (this reference)
+    // name : The function name
+});</code></pre>
+
+<p>You can also listen to specific events by using camelcased event names.
+To get an event only before the <em>test</em> method, attach the following event listener:</p>
+
+<pre><code>emitter.on('beforeTest', function(args, instance, name) {
+});
+
+emitter.on('afterTest', function(result, args, instance, name) {
+});</code></pre>
+
+<p>The parameters are the same as in the general event listeners.</p>
+
+<h2>Asynchronous punching</h2>
+
+<p>You can also punch asynchronous methods, that execute a callback instead of returning the value.
+In this case the <em>after</em> events receives an array of the callback parameters instead of a single return value.
+Just tell the event emitter the position of the callback in your arguments list when punching a method
+(use -1 if the callback is at the end of the argument list):</p>
+
+<pre><code>var rubberduck = require('../lib/rubberduck'),
+Duck = function(name) {
+    this.name = name;
+}
+
+Duck.prototype.quack = function(callback)
+{
+    callback(null, this.name + ' quacks!');
+}
+
+var donald = new Duck('Donald'),
+    emitter = rubberduck.emitter(donald).punch('quack', 0);
+
+// Log the callback results for _quack_
+emitter.on('afterQuack', function(results) {
+    // Results contains the callback arguments
+    console.log(results);
+});</code></pre>
+
+<h2>Punching prototypes and selective punching</h2>
+
+<p>You can also punch an objects prototype to receive events about all its instances but it
+is important to be selective about what methods to punch. Firing events on methods that get
+called many times (e.g. attaching to the Array.prototype) might lead to big performance
+hits and can quickly exceed the maximum call stack size.</p> </body> </html>
