@@ -5,5 +5,6 @@
 	"header": "Rubberduck",
 	"subheader": "Evented AOP for NodeJS",
 	"background": "whitey",
-	"docco_files": "examples/*.js"
+	"docco_files": "examples/*.js",
+	"github" : "https://github.com/daffl/rubberduck"
 }
