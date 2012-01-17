@@ -21,7 +21,7 @@ emitter.on('before', function(args, context, name) {
 });
 
 var donald = new Duck('Donald'),
-darkwin = new Duck('Darkwin');
+darkwing = new Duck('Darkwing');
 
 console.log(donald.getName());
-console.log(darkwin.getName());
+console.log(darkwing.getName());
