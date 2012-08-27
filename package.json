@@ -17,5 +17,8 @@
   },
   "engines": {
     "node": "*"
+  },
+  "devDependencies": {
+    "nodeunit" : ">= 0.7.0"
   }
 }
