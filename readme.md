@@ -1,3 +1,5 @@
+[![Build Status](https://secure.travis-ci.org/daffl/rubberduck.png)](http://travis-ci.org/daffl/rubberduck)
+
 Rubberduck punches JavaScript objects and lets you receive events before and after a method executes.
 Install it using [NPM](http://npmjs.org)
 
