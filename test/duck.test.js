@@ -29,15 +29,17 @@ exports.duckPunchSimple = function(test)
 
 exports.duckPunchThrow = function(test)
 {
-	test.expect(9);
+	var totalRuns = 12;
+	test.expect(totalRuns);
 	var obj = {
 	    syncMethod: function() { throw "go apple"; },
 	    asyncMethod1: function(callback) { throw "go orange"; callback("go grape"); },
-	    asyncMethod2: function(callback) { setTimeout(callback.bind(this, "go banana"), 0); }
+	    asyncMethod2: function(callback) { setTimeout(callback.bind(this, "go banana"), 0); },
+	    asyncMethod3: function(callback) { callback(new Error("go cucumber")); }
 	};
 
 	var emitter = duck.emitter(obj).punch('syncMethod');
-	emitter.punch(['asyncMethod1', 'asyncMethod2'], 0);
+	emitter.punch(['asyncMethod1', 'asyncMethod2', 'asyncMethod3'], 0);
 
 	var runs = 0;
 
@@ -49,13 +51,19 @@ exports.duckPunchThrow = function(test)
 	emitter.on('after', function(result, args, self, method) {
 		runs++;
 		test.ok(true, "after ran");
-		if(runs == 9) test.done();
+		if(runs == totalRuns) test.done();
+	});
+
+	emitter.on('error', function(error, args, self, method) {
+		runs++;
+		test.ok(true, "error ran");
+		if(runs == totalRuns) test.done();
 	});
 
 	process.on('uncaughtException', function(err) {
 		runs++;
 		test.ok(err == "go banana", "thrown banana went back up call stack correctly");
-		if(runs == 9) test.done();
+		if(runs == totalRuns) test.done();
 	});
 
 	try {
@@ -63,14 +71,18 @@ exports.duckPunchThrow = function(test)
 	} catch(e) {
 		runs++;
 		test.ok(e == "go apple", "thrown apple caught in the expected portion of user code");
-		if(runs == 9) test.done();
+		if(runs == totalRuns) test.done();
 	}
 	try {
 		obj.asyncMethod1(function() { test.ok(false, "will never run"); });
 	} catch(e) {
 		runs++;
 		test.ok(e == "go orange", "thrown orange caught in the expected portion of user code");
-		if(runs == 9) test.done();
+		if(runs == totalRuns) test.done();
 	}
 	obj.asyncMethod2(function(fruit) { throw fruit; });
+	obj.asyncMethod3(function(err, result) {
+		runs++;
+		if(err instanceof Error) test.ok(true, 'got the error object');
+	});
 };

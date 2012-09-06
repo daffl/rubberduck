@@ -97,4 +97,6 @@ hits and can quickly exceed the maximum call stack size.
 
 Methods that throw instead of return will still call the after event handlers, with the error
 provided as the result instead. This includes asynchronous functions with callbacks both before
-and after the callback occurs.
+and after the callback occurs. These methods fire ``error`` and ``errorMethod`` events in place
+of the ``after`` and ``afterMethod`` events. Asynchronous methods that return an ``Error``
+object as the first argument to the callback will also fire error-type events rather than after.
