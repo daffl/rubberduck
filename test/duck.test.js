@@ -26,3 +26,51 @@ exports.duckPunchSimple = function(test)
 	
 	test.done();
 };
+
+exports.duckPunchThrow = function(test)
+{
+	test.expect(9);
+	var obj = {
+	    syncMethod: function() { throw "go apple"; },
+	    asyncMethod1: function(callback) { throw "go orange"; callback("go grape"); },
+	    asyncMethod2: function(callback) { setTimeout(callback.bind(this, "go banana"), 0); }
+	};
+
+	var emitter = duck.emitter(obj).punch('syncMethod');
+	emitter.punch(['asyncMethod1', 'asyncMethod2'], 0);
+
+	var runs = 0;
+
+	emitter.on('before', function(args, self, method) {
+		runs++;
+		test.ok(true, "before ran");
+	});
+
+	emitter.on('after', function(result, args, self, method) {
+		runs++;
+		test.ok(true, "after ran");
+		if(runs == 9) test.done();
+	});
+
+	process.on('uncaughtException', function(err) {
+		runs++;
+		test.ok(err == "go banana", "thrown banana went back up call stack correctly");
+		if(runs == 9) test.done();
+	});
+
+	try {
+		obj.syncMethod();
+	} catch(e) {
+		runs++;
+		test.ok(e == "go apple", "thrown apple caught in the expected portion of user code");
+		if(runs == 9) test.done();
+	}
+	try {
+		obj.asyncMethod1(function() { test.ok(false, "will never run"); });
+	} catch(e) {
+		runs++;
+		test.ok(e == "go orange", "thrown orange caught in the expected portion of user code");
+		if(runs == 9) test.done();
+	}
+	obj.asyncMethod2(function(fruit) { throw fruit; });
+};

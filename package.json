@@ -1,13 +1,16 @@
 {
   "name": "rubberduck",
   "description": "Punch JavaScript objects and receive events before and after a function executes",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "homepage": "http://daffl.github.com/rubberduck",
   "repository": {
     "type": "git",
     "url": "git://github.com/daffl/rubberduck.git"
   },
   "author": "David Luecke <daff@neyeon.de> (http://neyeon.com)",
+  "contributors": [
+  	"David Ellis <d.f.ellis@ieee.org> (http://uber.com)"
+  ],
   "main": "lib/rubberduck",
   "directories": {
     "lib": "lib"
