@@ -92,3 +92,11 @@ You can also punch an objects prototype to receive events about all its instance
 is important to be selective about what methods to punch. Firing events on methods that get
 called many times (e.g. attaching to the Array.prototype) might lead to big performance
 hits and can quickly exceed the maximum call stack size.
+
+## Punching methods that throw
+
+Methods that throw instead of return will still call the after event handlers, with the error
+provided as the result instead. This includes asynchronous functions with callbacks both before
+and after the callback occurs. These methods fire ``error`` and ``errorMethod`` events in place
+of the ``after`` and ``afterMethod`` events. Asynchronous methods that return an ``Error``
+object as the first argument to the callback will also fire error-type events rather than after.
