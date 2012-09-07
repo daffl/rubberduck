@@ -1,27 +1,33 @@
 {
-  "name": "rubberduck",
-  "description": "Punch JavaScript objects and receive events before and after a function executes",
-  "version": "0.0.10",
-  "homepage": "http://daffl.github.com/rubberduck",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/daffl/rubberduck.git"
+  "name" : "rubberduck",
+  "description" : "Punch JavaScript objects and receive events before and after a function executes",
+  "version" : "0.1.0",
+  "homepage" : "http://daffl.github.com/rubberduck",
+  "repository" : {
+    "type" : "git",
+    "url" : "git://github.com/daffl/rubberduck.git"
   },
-  "author": "David Luecke <daff@neyeon.de> (http://neyeon.com)",
-  "contributors": [
-  	"David Ellis <d.f.ellis@ieee.org> (http://uber.com)"
+  "author" : "David Luecke <daff@neyeon.com> (http://neyeon.com)",
+  "contributors" : [
+    "David Ellis <d.f.ellis@ieee.org> (http://uber.com)"
   ],
-  "main": "lib/rubberduck",
-  "directories": {
-    "lib": "lib"
+  "main" : "lib/rubberduck",
+  "directories" : {
+    "lib" : "lib"
   },
-  "scripts": {
-    "test": "nodeunit test"
+  "scripts" : {
+    "test" : "nodeunit test"
   },
-  "engines": {
-    "node": "*"
+  "engines" : {
+    "node" : "*"
   },
-  "devDependencies": {
+  "licenses" : [
+    {
+      "type" : "MIT",
+      "url" : "http://www.opensource.org/licenses/mit-license.php"
+    }
+  ],
+  "devDependencies" : {
     "nodeunit" : ">= 0.7.0"
   }
 }
