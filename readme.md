@@ -101,6 +101,13 @@ and after the callback occurs. These methods fire ``error`` and ``errorMethod`` 
 of the ``after`` and ``afterMethod`` events. Asynchronous methods that return an ``Error``
 object as the first argument to the callback will also fire error-type events rather than after.
 
+## Strict punched methods
+
+A second optional parameter to ``punch`` (the third argument) is a flag indicating whether or not
+rubberduck should be strict with the signature of the resulting function. This means the ``length``
+property of any punched method will remain the same (rather than revert to zero), at the cost of
+a slightly more expensive mechanism to punch the methods, and is off by default.
+
 ## License
 
 Copyright (C) 2011 David Luecke daff@neyeon.de
