@@ -86,3 +86,26 @@ exports.duckPunchThrow = function(test)
 		if(err instanceof Error) test.ok(true, 'got the error object');
 	});
 };
+
+exports.duckPunchStrict = function(test) {
+	test.expect(3);
+	var obj = {
+		number: 42,
+		zeroLen: function() {
+			return this.number;
+		},
+		oneLen: function(val) {
+			return val + this.number;
+		},
+		twoLen: function(val1, val2) {
+			return this.number * val1 / val2;
+		}
+	};
+
+	var emitter = duck.emitter(obj).punch(['zeroLen', 'oneLen', 'twoLen'], null, true);
+
+	test.equal(obj.zeroLen.length, 0, 'zeroLen stays with zero args');
+	test.equal(obj.oneLen.length, 1, 'oneLen keeps its argument length');
+	test.equal(obj.twoLen.length, 2, 'twoLen also keeps its arg len. In zero, one, many context, this should now work perfectly');
+	test.done();
+};
