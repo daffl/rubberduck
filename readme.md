@@ -9,7 +9,9 @@ or clone the [GitHub repository](https://github.com/daffl/rubberduck).
 
 	var rubberduck = require('rubberduck');
 
-## Simple punching
+## Duck punching
+
+### Simple punching
 
 Lets punch the _push_ method of an array instance and log the element that gets
 pushed before the method executes and the new length of the array (returned by Array.push)
@@ -29,7 +31,7 @@ and the pushed element when it returns.
 	
 	myarray.push('Test');
 
-## Listening to events
+### Listening to events
 
 Once you picked the methods to be punched the emitter fires the following events:
 
@@ -60,7 +62,7 @@ To get evnts only for the _test_ method, attach the following event listener:
 	
 The parameters are the same as in the general event listeners.
 
-## Asynchronous punching
+### Asynchronous punching
 
 You can also punch asynchronous methods, that execute a callback instead of returning the value.
 In this case the _after_ events receives an array of the callback parameters instead of a single return value.
@@ -86,14 +88,16 @@ Just tell the event emitter the position of the callback in your arguments list 
 		console.log(results);
 	});
 
-## Punching prototypes and selective punching
+## Advanced usage
+
+### Punching prototypes and selective punching
 
 You can also punch an objects prototype to receive events about all its instances but it
 is important to be selective about what methods to punch. Firing events on methods that get
 called many times (e.g. attaching to the Array.prototype) might lead to big performance
 hits and can quickly exceed the maximum call stack size.
 
-## Punching methods that throw
+### Punching methods that throw
 
 Methods that throw instead of return will still call the after event handlers, with the error
 provided as the result instead. This includes asynchronous functions with callbacks both before
@@ -101,16 +105,16 @@ and after the callback occurs. These methods fire ``error`` and ``errorMethod`` 
 of the ``after`` and ``afterMethod`` events. Asynchronous methods that return an ``Error``
 object as the first argument to the callback will also fire error-type events rather than after.
 
-## Strict punched methods
+### Strict punched methods
 
-A second optional parameter to ``punch`` (the third argument) is a flag indicating whether or not
+A second optional parameter to `punch` (the third argument) is a flag indicating whether or not
 rubberduck should be strict with the signature of the resulting function. This means the ``length``
 property of any punched method will remain the same (rather than revert to zero), at the cost of
 a slightly more expensive mechanism to punch the methods, and is off by default.
 
 ## License
 
-Copyright (C) 2011 David Luecke daff@neyeon.de
+Copyright (C) 2012 David Luecke daff@neyeon.de
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
