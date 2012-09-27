@@ -35,7 +35,7 @@ exports.wrapNamed = function (test) {
 		return 'testing';
 	}
 	
-	var wrapped = duck.wrap.fn(emitter, fn, 'quack');
+	var wrapped = duck.wrap.fn(emitter, fn, false, 'quack');
 	
 	emitter.on('before', function(args, context, method) {
 		test.equal(args[0], 'test');
@@ -72,7 +72,7 @@ exports.wrapScope = function (test) {
 	
 	emitter = new events.EventEmitter();
 	
-	var wrapped = duck.wrap.fn(emitter, obj.method, 'method', obj);
+	var wrapped = duck.wrap.fn(emitter, obj.method, false, 'method', obj);
 	
 	emitter.on('after', function(result) {
 		test.equal(result, 42);
