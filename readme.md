@@ -1,6 +1,8 @@
 # Rubberduck
 
-__Event Aspect Oriented Programming__
+[![Build Status](https://secure.travis-ci.org/daffl/rubberduck.png)](http://travis-ci.org/daffl/rubberduck)
+
+__Evented Aspect Oriented Programming__
 
 Rubberduck punches JavaScript objects and lets you receive events before and after a method executes.
 Install it using [NPM](http://npmjs.org)
@@ -114,6 +116,17 @@ rubberduck should be strict with the signature of the resulting function. This m
 property of any punched method will remain the same (rather than revert to zero), at the cost of
 a slightly more expensive mechanism to punch the methods, and is off by default.
 
+## Changelog
+
+__1.0.0:__
+
+- Small internal reorganization
+- JSHint and code style improvements
+
+__0.x:__
+
+- Initial alpha releases
+
 ## License
 
 Copyright (C) 2012 David Luecke daff@neyeon.de
@@ -135,5 +148,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
-
-[![Build Status](https://secure.travis-ci.org/daffl/rubberduck.png)](http://travis-ci.org/daffl/rubberduck)
