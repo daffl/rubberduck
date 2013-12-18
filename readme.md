@@ -1,5 +1,7 @@
 # Rubberduck
 
+__Event Aspect Oriented Programming__
+
 Rubberduck punches JavaScript objects and lets you receive events before and after a method executes.
 Install it using [NPM](http://npmjs.org)
 

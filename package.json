@@ -1,33 +1,37 @@
 {
-  "name" : "rubberduck",
-  "description" : "Punch JavaScript objects and receive events before and after a function executes",
-  "version" : "0.2.0",
-  "homepage" : "http://daffl.github.com/rubberduck",
-  "repository" : {
-    "type" : "git",
-    "url" : "git://github.com/daffl/rubberduck.git"
+  "name": "rubberduck",
+  "description": "Evented AOP for NodeJS",
+  "version": "0.2.0",
+  "homepage": "http://daffl.github.com/rubberduck",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/daffl/rubberduck.git"
   },
-  "author" : "David Luecke <daff@neyeon.com> (http://neyeon.com)",
-  "contributors" : [
+  "author": "David Luecke <daff@neyeon.com> (http://daffl.github.com)",
+  "contributors": [
     "David Ellis <d.f.ellis@ieee.org> (http://uber.com)"
   ],
-  "main" : "lib/rubberduck",
-  "directories" : {
-    "lib" : "lib"
+  "main": "lib/rubberduck",
+  "directories": {
+    "lib": "lib"
   },
-  "scripts" : {
-    "test" : "nodeunit test"
+  "scripts": {
+    "test": "grunt jshint && node_modules/nodeunit/bin/nodeunit test"
   },
-  "engines" : {
-    "node" : "*"
+  "engines": {
+    "node": "*"
   },
-  "licenses" : [
+  "licenses": [
     {
-      "type" : "MIT",
-      "url" : "http://www.opensource.org/licenses/mit-license.php"
+      "type": "MIT",
+      "url": "http://www.opensource.org/licenses/mit-license.php"
     }
   ],
-  "devDependencies" : {
-    "nodeunit" : ">= 0.7.0"
+  "devDependencies": {
+    "nodeunit": "~0.8.2",
+    "grunt-release": "~0.6.0",
+    "grunt-contrib-jshint": "~0.7.2",
+    "grunt-cli": "~0.1.11",
+    "grunt": "~0.4.2"
   }
 }
