@@ -126,6 +126,11 @@ a slightly more expensive mechanism to punch the methods, and is off by default.
 
 ## Changelog
 
+__1.0.1:__
+
+- Switched to Mocha for build system
+- Some documentation updates
+
 __1.0.0:__
 
 - Small internal reorganization
@@ -137,7 +142,7 @@ __0.x:__
 
 ## License
 
-Copyright (C) 2012 David Luecke daff@neyeon.de
+Copyright (C) 2014 David Luecke daff@neyeon.de
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
