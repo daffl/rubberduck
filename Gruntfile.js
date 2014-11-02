@@ -2,6 +2,11 @@ module.exports = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({
+    simplemocha: {
+      lib: {
+        src: ['test/**/*.test.js']
+      }
+    },
     jshint: {
       options: {
         jshintrc: '.jshintrc'
@@ -12,8 +17,10 @@ module.exports = function(grunt) {
     release: {}
   });
 
-  grunt.registerTask('default', 'jshint');
+  grunt.registerTask('default', 'test');
+  grunt.registerTask('test', [ 'jshint', 'simplemocha' ]);
 
+  grunt.loadNpmTasks('grunt-simple-mocha');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-release');
 };
