@@ -126,6 +126,10 @@ a slightly more expensive mechanism to punch the methods, and is off by default.
 
 ## Changelog
 
+__1.0.2__
+
+- `wrapAsync` should still return the original value ([#5](https://github.com/daffl/rubberduck/pull/5))
+
 __1.0.1:__
 
 - Switched to Mocha for build system
