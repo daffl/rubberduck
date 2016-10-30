@@ -48,7 +48,7 @@ var wrap = exports.wrap = {
       var methodArgs = arguments;
       var callbackWrapper = function() {
         try {
-          callback.apply(callback, arguments);
+          callback.apply(context, arguments);
         } catch (e) {
           utils.emitEvents(emitter, 'error', name, [ e, methodArgs, context, name ]);
           throw e;
@@ -206,8 +206,12 @@ EventEmitter.prototype.emit = function(type) {
       er = arguments[1];
       if (er instanceof Error) {
         throw er; // Unhandled 'error' event
+      } else {
+        // At least give some kind of context to the user
+        var err = new Error('Uncaught, unspecified "error" event. (' + er + ')');
+        err.context = er;
+        throw err;
       }
-      throw TypeError('Uncaught, unspecified "error" event.');
     }
   }
 
