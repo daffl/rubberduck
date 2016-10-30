@@ -126,35 +126,11 @@ a slightly more expensive mechanism to punch the methods, and is off by default.
 
 ## Changelog
 
-__1.1.1__
-
-- `wrapAsync` should keep the original context ([#7](https://github.com/daffl/rubberduck/issues/7), [#8](https://github.com/daffl/rubberduck/pull/8))
-
-__1.1.0__
-
-- Browser build ([#6](https://github.com/daffl/rubberduck/pull/6))
-
-__1.0.2__
-
-- `wrapAsync` should still return the original value ([#5](https://github.com/daffl/rubberduck/pull/5))
-
-__1.0.1:__
-
-- Switched to Mocha for build system
-- Some documentation updates
-
-__1.0.0:__
-
-- Small internal reorganization
-- JSHint and code style improvements
-
-__0.x:__
-
-- Initial alpha releases
+See [Changelog](CHANGELOG.md).
 
 ## License
 
-Copyright (C) 2014 David Luecke daff@neyeon.de
+Copyright (C) 20146David Luecke daff@neyeon.de
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
