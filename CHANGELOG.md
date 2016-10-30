@@ -1,8 +1,7 @@
 # Change Log
 
-## [Unreleased](https://github.com/daffl/rubberduck/tree/HEAD)
-
-[Full Changelog](https://github.com/daffl/rubberduck/compare/1.1.0...HEAD)
+## [v1.1.1](https://github.com/daffl/rubberduck/tree/v1.1.1) (2016-10-30)
+[Full Changelog](https://github.com/daffl/rubberduck/compare/1.1.0...v1.1.1)
 
 **Closed issues:**
 
