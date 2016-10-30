@@ -126,9 +126,13 @@ a slightly more expensive mechanism to punch the methods, and is off by default.
 
 ## Changelog
 
-__1.0.3__
+__1.1.1__
 
 - `wrapAsync` should keep the original context ([#7](https://github.com/daffl/rubberduck/issues/7), [#8](https://github.com/daffl/rubberduck/pull/8))
+
+__1.1.0__
+
+- Browser build ([#6](https://github.com/daffl/rubberduck/pull/6))
 
 __1.0.2__
 
