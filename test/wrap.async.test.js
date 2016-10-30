@@ -3,8 +3,9 @@ var duck = require('../lib/rubberduck');
 var events = require('events');
 
 describe('Asynchronous function wrapping', function() {
-  it('wraps asynchronous function but returns its value', function(done) {
+  it('wraps asynchronous function but returns its value, keeps context (#7)', function(done) {
     var emitter = new events.EventEmitter();
+    var context = {};
 
     var asyncFn = function(cb) {
       assert.ok(true, 'Fn called');
@@ -15,6 +16,7 @@ describe('Asynchronous function wrapping', function() {
     var wrapped = duck.wrap.async(emitter, asyncFn);
 
     var callback = function(result) {
+      assert.equal(this, context);
       assert.equal(result, 'testing');
     };
 
@@ -28,7 +30,7 @@ describe('Asynchronous function wrapping', function() {
       done();
     });
 
-    assert.ok(wrapped(callback, 42));
+    assert.ok(wrapped.call(context, callback, 42));
   });
 
   it('wraps async test with callback at the end', function(done) {
