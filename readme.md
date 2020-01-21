@@ -1,5 +1,7 @@
 # Rubberduck
 
+> __Important:__ This module is no longer maintained. For modern workflows and events, use [@feathersjs/hooks](https://github.com/feathersjs/hooks) instead.
+
 [![Build Status](https://secure.travis-ci.org/daffl/rubberduck.png)](http://travis-ci.org/daffl/rubberduck)
 
 __Evented Aspect Oriented Programming__
